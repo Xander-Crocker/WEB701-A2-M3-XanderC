@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Gamepad2, Eye, Ear, Brain, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
