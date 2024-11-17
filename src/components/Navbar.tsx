@@ -47,6 +47,9 @@ function Navbar() {
                 <Link to="/dashboard" className="text-gray-700 hover:text-purple-600">
                   Dashboard
                 </Link>
+                <Link to="/profile" className="block text-gray-700 hover:text-purple-600">
+                  Profile
+                </Link>
                 <button onClick={handleLogout} className="text-gray-700 hover:text-purple-600">
                   Logout
                 </button>

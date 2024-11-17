@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../hooks/useAuth';
-import axios from 'axios';
 
 interface ProfileForm {
     username: string;
@@ -11,45 +10,34 @@ interface ProfileForm {
     confirmPassword?: string;
 }
 
-function Profile() {
-    const { user, token } = useAuth();
-    const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<ProfileForm>({
-        defaultValues: {
-        username: user?.username || '',
-        email: user?.email || ''
-        }
-    });
-
+const Profile: React.FC = () => {
+    const { register, handleSubmit, watch, formState: { errors } } = useForm<ProfileForm>();
+    const [message, setMessage] = useState<{ type: string; text: string } | null>(null);
+    const { updateProfile, token } = useAuth();
+    
+    if (!token) {
+        setMessage({ type: 'error', text: 'User is not authenticated' });
+        return null;
+    }
     const newPassword = watch('newPassword');
 
     const onSubmit = async (data: ProfileForm) => {
         try {
-        setMessage(null);
-
-        if (data.newPassword && data.newPassword !== data.confirmPassword) {
-            setMessage({ type: 'error', text: 'New passwords do not match' });
-            return;
-        }
-
-        await axios.put('/auth/profile', 
-            {
-                username: data.username,
-                email: data.email,
-                currentPassword: data.currentPassword,
-                newPassword: data.newPassword || undefined
-            },
-            {
-                headers: { Authorization: `Bearer ${token}` }
+            setMessage(null);
+    
+            if (data.newPassword && data.newPassword !== data.confirmPassword) {
+                setMessage({ type: 'error', text: 'New passwords do not match' });
+                return;
             }
-        );
-
-        setMessage({ type: 'success', text: 'Profile updated successfully' });
+    
+            await updateProfile(data, token);
+    
+            setMessage({ type: 'success', text: 'Profile updated successfully' });
         } catch (error: any) {
-        setMessage({ 
-            type: 'error', 
-            text: error.response?.data?.message || 'Failed to update profile' 
-        });
+                setMessage({ 
+                type: 'error', 
+                text: error.message || 'Failed to update profile' 
+            });
         }
     };
 
