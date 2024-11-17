@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import CreateEvent from './pages/CreateEvent';
 import AccessibilityGuide from './pages/AccessibilityGuide';
 import MyTickets from './pages/MyTickets';
+import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -35,6 +36,11 @@ function App() {
             <Route path="/my-tickets" element={
               <ProtectedRoute>
                 <MyTickets />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
           </Routes>
