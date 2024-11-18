@@ -8,12 +8,14 @@ import authRoutes from './routes/auth.js';
 import eventRoutes from './routes/events.js';
 import ticketRoutes from './routes/tickets.js';
 
+// Get directory name of current module
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Load environment variables
 dotenv.config({ path: join(__dirname, '../.env') });
 
+// Initialize Express app
 const app = express();
 
 // Middleware
@@ -23,12 +25,15 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
+// Enable CORS
 app.use(cors(corsOptions));
+// Parse incoming JSON payloads
 app.use(express.json());
 
 // Connect to MongoDB and start server
 const startServer = async () => {
   try {
+    // Connect to MongoDB
     await connectDB();
 
     // Routes
@@ -46,14 +51,17 @@ const startServer = async () => {
       });
     });
 
+    // Start server
     const PORT = process.env.PORT || 8081;
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
+    // Log and exit if server fails to start
     console.error('Failed to start server:', error);
     process.exit(1);
   }
 };
 
+// Call start server
 startServer();
