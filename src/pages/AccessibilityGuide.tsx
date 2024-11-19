@@ -3,6 +3,7 @@ import { Gamepad2, Eye, Ear, Brain, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
+// Define the structure of an event
 interface Event {
   _id: string;
   title: string;
@@ -14,10 +15,14 @@ interface Event {
 }
 
 function AccessibilityGuide() {
+  // State to store the selected accessibility features
   const [selectedFeatures, setSelectedFeatures] = useState<Set<string>>(new Set());
+  // State to store the recommended events based on selected features
   const [recommendedEvents, setRecommendedEvents] = useState<Event[]>([]);
+  // State to handle loading status
   const [loading, setLoading] = useState(false);
 
+  // Function to toggle the selection of an accessibility feature
   const toggleFeature = (feature: string) => {
     const newFeatures = new Set(selectedFeatures);
     if (newFeatures.has(feature)) {
@@ -28,9 +33,11 @@ function AccessibilityGuide() {
     setSelectedFeatures(newFeatures);
   };
 
+  // Function to find events based on selected accessibility features
   const findEvents = async () => {
     setLoading(true);
     try {
+      // Make an API call to fetch events with the selected accessibility features
       const response = await axios.get('/api/events');
       const allEvents = response.data.events;
       
@@ -40,11 +47,13 @@ function AccessibilityGuide() {
           event.accessibilityFeatures.includes(feature)
         )
       );
-
+      // Set the fetched events to state
       setRecommendedEvents(filteredEvents);
     } catch (error) {
+      // Log the error if event fetching fails
       console.error('Failed to fetch events:', error);
     } finally {
+      // Set loading to false after the API call is complete
       setLoading(false);
     }
   };
@@ -98,6 +107,7 @@ function AccessibilityGuide() {
           <div className="p-4 border border-gray-200 rounded-lg hover:border-purple-500 transition">
             <h3 className="font-semibold mb-2">Visual Needs</h3>
             <div className="flex items-center space-x-4">
+              {/* Checkbox input for colorblind mode */}
               <input
                 type="checkbox"
                 id="colorblindMode"
@@ -112,6 +122,7 @@ function AccessibilityGuide() {
           <div className="p-4 border border-gray-200 rounded-lg hover:border-purple-500 transition">
             <h3 className="font-semibold mb-2">Audio Needs</h3>
             <div className="flex items-center space-x-4">
+              {/* Checkbox input for closed captions */}
               <input
                 type="checkbox"
                 id="closedCaptions"
@@ -122,6 +133,7 @@ function AccessibilityGuide() {
               <label htmlFor="closedCaptions">Closed captions</label>
             </div>
             <div className="flex items-center space-x-4 mt-2">
+              {/* Checkbox input for audio descriptions */}
               <input
                 type="checkbox"
                 id="audioDescription"
@@ -136,6 +148,7 @@ function AccessibilityGuide() {
           <div className="p-4 border border-gray-200 rounded-lg hover:border-purple-500 transition">
             <h3 className="font-semibold mb-2">Control Requirements</h3>
             <div className="flex items-center space-x-4">
+              {/* Checkbox input for adaptive controllers */}
               <input
                 type="checkbox"
                 id="adaptiveControllers"
@@ -148,6 +161,7 @@ function AccessibilityGuide() {
           </div>
         </div>
 
+        {/* Button to find events based on selected features */}
         <button
           onClick={findEvents}
           disabled={loading}
@@ -163,6 +177,7 @@ function AccessibilityGuide() {
           )}
         </button>
 
+        {/* Display recommended events based on selected features */}
         {recommendedEvents.length > 0 && (
           <div className="mt-8">
             <h3 className="text-xl font-bold mb-4">Recommended Events</h3>

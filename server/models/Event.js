@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define the event schema
 const eventSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
@@ -26,7 +27,7 @@ eventSchema.methods.bookTicket = async function() {
   if (!this.hasAvailableTickets()) {
     throw new Error('No tickets available');
   }
-  
+  // Decrease the available tickets by 1
   this.availableTickets -= 1;
   return this.save();
 };

@@ -1,9 +1,9 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Gamepad, Users, Ticket, Heart } from 'lucide-react';
 
 function Home() {
   return (
+    // Display the hero section with browse events and join the community buttons
     <div className="max-w-7xl mx-auto">
       <section className="text-center py-20 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl mb-12">
         <h1 className="text-5xl font-bold text-white mb-6">
@@ -28,6 +28,7 @@ function Home() {
         </div>
       </section>
 
+      {/* Display key features */}
       <section className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
         <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition">
           <Gamepad className="w-12 h-12 text-purple-600 mb-4" />
@@ -59,6 +60,7 @@ function Home() {
         </div>
       </section>
 
+      {/* Display upcoming event cards */}
       <section className="bg-white rounded-3xl p-12 mb-20">
         <h2 className="text-3xl font-bold mb-8 text-center">
           Upcoming Featured Events
