@@ -2,6 +2,6 @@
 
 Open the terminal and enter the following two commands:
 
-`npmi`
+`npm i`
 
 `npm run dev`
