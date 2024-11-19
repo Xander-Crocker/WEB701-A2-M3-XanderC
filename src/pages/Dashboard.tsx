@@ -62,12 +62,14 @@ function Dashboard() {
         <h1 className="text-4xl font-bold">Dashboard</h1>
         {/* Display the "Create Event" button for members */}
         {user?.role === 'member' && (
-          <Link
-            to="/create-event"
-            className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700"
-          >
-            Create Event
-          </Link>
+          <div>
+            <Link
+              to="/create-event"
+              className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 mr-2" 
+            >
+              Create Event
+            </Link>
+          </div>
         )}
       </div>
 
