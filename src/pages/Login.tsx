@@ -22,7 +22,7 @@ function Login() {
       // Attempt to log in the user with the provided data
       await login(data.email, data.password);
       // Navigate to the dashboard upon successful login
-      navigate('/dashboard');
+      navigate('/my-tickets');
     } catch (error) {
       // Log the error if login fails
       console.error('Login failed:', error);
